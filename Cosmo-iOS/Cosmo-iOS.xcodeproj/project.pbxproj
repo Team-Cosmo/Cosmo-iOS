@@ -13,6 +13,27 @@
 		5EE769B82D76BF21009DEB58 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EE769B62D76BF21009DEB58 /* Main.storyboard */; };
 		5EE769BA2D76BF23009DEB58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EE769B92D76BF23009DEB58 /* Assets.xcassets */; };
 		5EE769BD2D76BF23009DEB58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EE769BB2D76BF23009DEB58 /* LaunchScreen.storyboard */; };
+		5EF2C49C2D95417D00EA89C1 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C49B2D95417D00EA89C1 /* .gitkeep */; };
+		5EF2C4A62D95418E00EA89C1 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4A22D95418E00EA89C1 /* Pretendard-Medium.otf */; };
+		5EF2C4A72D95418E00EA89C1 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C49D2D95418E00EA89C1 /* Pretendard-Black.otf */; };
+		5EF2C4A82D95418E00EA89C1 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4A52D95418E00EA89C1 /* Pretendard-Thin.otf */; };
+		5EF2C4A92D95418E00EA89C1 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C49E2D95418E00EA89C1 /* Pretendard-Bold.otf */; };
+		5EF2C4AA2D95418E00EA89C1 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4A12D95418E00EA89C1 /* Pretendard-Light.otf */; };
+		5EF2C4AB2D95418E00EA89C1 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C49F2D95418E00EA89C1 /* Pretendard-ExtraBold.otf */; };
+		5EF2C4AC2D95418E00EA89C1 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4A02D95418E00EA89C1 /* Pretendard-ExtraLight.otf */; };
+		5EF2C4AD2D95418E00EA89C1 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4A32D95418E00EA89C1 /* Pretendard-Regular.otf */; };
+		5EF2C4AE2D95418E00EA89C1 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4A42D95418E00EA89C1 /* Pretendard-SemiBold.otf */; };
+		5EF2C4B62D9541DD00EA89C1 /* MiraeroNormal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4B42D9541DD00EA89C1 /* MiraeroNormal.ttf */; };
+		5EF2C4B72D9541DD00EA89C1 /* DOSMyungjo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4B12D9541DD00EA89C1 /* DOSMyungjo.ttf */; };
+		5EF2C4B82D9541DD00EA89C1 /* DOSGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4AF2D9541DD00EA89C1 /* DOSGothic.ttf */; };
+		5EF2C4B92D9541DD00EA89C1 /* DOSIyagiBoldface.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4B02D9541DD00EA89C1 /* DOSIyagiBoldface.ttf */; };
+		5EF2C4BA2D9541DD00EA89C1 /* Sam3KRFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4B52D9541DD00EA89C1 /* Sam3KRFont.ttf */; };
+		5EF2C4BB2D9541DD00EA89C1 /* DOSSaemmul.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4B32D9541DD00EA89C1 /* DOSSaemmul.ttf */; };
+		5EF2C4BC2D9541DD00EA89C1 /* DOSPilgi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF2C4B22D9541DD00EA89C1 /* DOSPilgi.ttf */; };
+		5EF2C5152D9BD3B500EA89C1 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5EF2C5142D9BD3B500EA89C1 /* SnapKit */; };
+		5EF2C5182D9BD3C900EA89C1 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 5EF2C5172D9BD3C900EA89C1 /* RxCocoa */; };
+		5EF2C51A2D9BD3C900EA89C1 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5EF2C5192D9BD3C900EA89C1 /* RxSwift */; };
+		5EF2C51F2D9BD67000EA89C1 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 5EF2C51E2D9BD67000EA89C1 /* RxGesture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +45,23 @@
 		5EE769B92D76BF23009DEB58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5EE769BC2D76BF23009DEB58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5EE769BE2D76BF23009DEB58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5EF2C49B2D95417D00EA89C1 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		5EF2C49D2D95418E00EA89C1 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		5EF2C49E2D95418E00EA89C1 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		5EF2C49F2D95418E00EA89C1 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		5EF2C4A02D95418E00EA89C1 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		5EF2C4A12D95418E00EA89C1 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		5EF2C4A22D95418E00EA89C1 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		5EF2C4A32D95418E00EA89C1 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		5EF2C4A42D95418E00EA89C1 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		5EF2C4A52D95418E00EA89C1 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		5EF2C4AF2D9541DD00EA89C1 /* DOSGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DOSGothic.ttf; sourceTree = "<group>"; };
+		5EF2C4B02D9541DD00EA89C1 /* DOSIyagiBoldface.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DOSIyagiBoldface.ttf; sourceTree = "<group>"; };
+		5EF2C4B12D9541DD00EA89C1 /* DOSMyungjo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DOSMyungjo.ttf; sourceTree = "<group>"; };
+		5EF2C4B22D9541DD00EA89C1 /* DOSPilgi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DOSPilgi.ttf; sourceTree = "<group>"; };
+		5EF2C4B32D9541DD00EA89C1 /* DOSSaemmul.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DOSSaemmul.ttf; sourceTree = "<group>"; };
+		5EF2C4B42D9541DD00EA89C1 /* MiraeroNormal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MiraeroNormal.ttf; sourceTree = "<group>"; };
+		5EF2C4B52D9541DD00EA89C1 /* Sam3KRFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sam3KRFont.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +69,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EF2C51A2D9BD3C900EA89C1 /* RxSwift in Frameworks */,
+				5EF2C5182D9BD3C900EA89C1 /* RxCocoa in Frameworks */,
+				5EF2C51F2D9BD67000EA89C1 /* RxGesture in Frameworks */,
+				5EF2C5152D9BD3B500EA89C1 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +98,13 @@
 		5EE769AF2D76BF21009DEB58 /* Cosmo-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				5EE769B02D76BF21009DEB58 /* AppDelegate.swift */,
+				5EF2C50E2D9BCCDB00EA89C1 /* Presentation */,
+				5EF2C4972D95414C00EA89C1 /* Resources */,
+				5EF2C4962D9540BF00EA89C1 /* Network */,
+				5EF2C4952D95407000EA89C1 /* Extension */,
+				5EF2C4942D95406800EA89C1 /* Domain */,
+				5EF2C4932D95406200EA89C1 /* Data */,
+				5EF2C4922D95405800EA89C1 /* App */,
 				5EE769B22D76BF21009DEB58 /* SceneDelegate.swift */,
 				5EE769B42D76BF21009DEB58 /* ViewController.swift */,
 				5EE769B62D76BF21009DEB58 /* Main.storyboard */,
@@ -65,6 +113,89 @@
 				5EE769BE2D76BF23009DEB58 /* Info.plist */,
 			);
 			path = "Cosmo-iOS";
+			sourceTree = "<group>";
+		};
+		5EF2C4922D95405800EA89C1 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5EE769B02D76BF21009DEB58 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5EF2C4932D95406200EA89C1 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		5EF2C4942D95406800EA89C1 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		5EF2C4952D95407000EA89C1 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		5EF2C4962D9540BF00EA89C1 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5EF2C4972D95414C00EA89C1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5EF2C4982D95415600EA89C1 /* Font */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5EF2C4982D95415600EA89C1 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				5EF2C4AF2D9541DD00EA89C1 /* DOSGothic.ttf */,
+				5EF2C4B02D9541DD00EA89C1 /* DOSIyagiBoldface.ttf */,
+				5EF2C4B12D9541DD00EA89C1 /* DOSMyungjo.ttf */,
+				5EF2C4B22D9541DD00EA89C1 /* DOSPilgi.ttf */,
+				5EF2C4B32D9541DD00EA89C1 /* DOSSaemmul.ttf */,
+				5EF2C4B42D9541DD00EA89C1 /* MiraeroNormal.ttf */,
+				5EF2C4B52D9541DD00EA89C1 /* Sam3KRFont.ttf */,
+				5EF2C49B2D95417D00EA89C1 /* .gitkeep */,
+				5EF2C49D2D95418E00EA89C1 /* Pretendard-Black.otf */,
+				5EF2C49E2D95418E00EA89C1 /* Pretendard-Bold.otf */,
+				5EF2C49F2D95418E00EA89C1 /* Pretendard-ExtraBold.otf */,
+				5EF2C4A02D95418E00EA89C1 /* Pretendard-ExtraLight.otf */,
+				5EF2C4A12D95418E00EA89C1 /* Pretendard-Light.otf */,
+				5EF2C4A22D95418E00EA89C1 /* Pretendard-Medium.otf */,
+				5EF2C4A32D95418E00EA89C1 /* Pretendard-Regular.otf */,
+				5EF2C4A42D95418E00EA89C1 /* Pretendard-SemiBold.otf */,
+				5EF2C4A52D95418E00EA89C1 /* Pretendard-Thin.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		5EF2C50E2D9BCCDB00EA89C1 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				5EF2C50F2D9BCCE500EA89C1 /* OnBoarding */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		5EF2C50F2D9BCCE500EA89C1 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = OnBoarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -111,6 +242,11 @@
 				Base,
 			);
 			mainGroup = 5EE769A42D76BF21009DEB58;
+			packageReferences = (
+				5EF2C5132D9BD3B500EA89C1 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				5EF2C5162D9BD3C900EA89C1 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				5EF2C51D2D9BD67000EA89C1 /* XCRemoteSwiftPackageReference "RxGesture" */,
+			);
 			productRefGroup = 5EE769AE2D76BF21009DEB58 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -128,6 +264,23 @@
 				5EE769BD2D76BF23009DEB58 /* LaunchScreen.storyboard in Resources */,
 				5EE769BA2D76BF23009DEB58 /* Assets.xcassets in Resources */,
 				5EE769B82D76BF21009DEB58 /* Main.storyboard in Resources */,
+				5EF2C4B62D9541DD00EA89C1 /* MiraeroNormal.ttf in Resources */,
+				5EF2C4B72D9541DD00EA89C1 /* DOSMyungjo.ttf in Resources */,
+				5EF2C4B82D9541DD00EA89C1 /* DOSGothic.ttf in Resources */,
+				5EF2C4B92D9541DD00EA89C1 /* DOSIyagiBoldface.ttf in Resources */,
+				5EF2C4BA2D9541DD00EA89C1 /* Sam3KRFont.ttf in Resources */,
+				5EF2C4BB2D9541DD00EA89C1 /* DOSSaemmul.ttf in Resources */,
+				5EF2C4BC2D9541DD00EA89C1 /* DOSPilgi.ttf in Resources */,
+				5EF2C49C2D95417D00EA89C1 /* .gitkeep in Resources */,
+				5EF2C4A62D95418E00EA89C1 /* Pretendard-Medium.otf in Resources */,
+				5EF2C4A72D95418E00EA89C1 /* Pretendard-Black.otf in Resources */,
+				5EF2C4A82D95418E00EA89C1 /* Pretendard-Thin.otf in Resources */,
+				5EF2C4A92D95418E00EA89C1 /* Pretendard-Bold.otf in Resources */,
+				5EF2C4AA2D95418E00EA89C1 /* Pretendard-Light.otf in Resources */,
+				5EF2C4AB2D95418E00EA89C1 /* Pretendard-ExtraBold.otf in Resources */,
+				5EF2C4AC2D95418E00EA89C1 /* Pretendard-ExtraLight.otf in Resources */,
+				5EF2C4AD2D95418E00EA89C1 /* Pretendard-Regular.otf in Resources */,
+				5EF2C4AE2D95418E00EA89C1 /* Pretendard-SemiBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +445,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TDW27ADF89;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cosmo-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -319,6 +473,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TDW27ADF89;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cosmo-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -361,6 +516,56 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5EF2C5132D9BD3B500EA89C1 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		5EF2C5162D9BD3C900EA89C1 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.0;
+			};
+		};
+		5EF2C51D2D9BD67000EA89C1 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5EF2C5142D9BD3B500EA89C1 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5EF2C5132D9BD3B500EA89C1 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		5EF2C5172D9BD3C900EA89C1 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5EF2C5162D9BD3C900EA89C1 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		5EF2C5192D9BD3C900EA89C1 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5EF2C5162D9BD3C900EA89C1 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		5EF2C51E2D9BD67000EA89C1 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5EF2C51D2D9BD67000EA89C1 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5EE769A52D76BF21009DEB58 /* Project object */;
 }
