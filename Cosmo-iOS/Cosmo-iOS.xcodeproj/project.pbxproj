@@ -13,6 +13,12 @@
 		5E7E99182DA40F8E00843C13 /* RemoteQuestionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E99172DA40F8E00843C13 /* RemoteQuestionDataSource.swift */; };
 		5E7E991A2DA40FCA00843C13 /* QuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E99192DA40FCA00843C13 /* QuestionRepository.swift */; };
 		5E7E991D2DA4103100843C13 /* OpenAIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E991C2DA4103100843C13 /* OpenAIResponse.swift */; };
+		5E7E99202DA42F2100843C13 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E991F2DA42F2100843C13 /* HomeViewController.swift */; };
+		5E7E99222DA42F9300843C13 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E99212DA42F9300843C13 /* HomeViewModel.swift */; };
+		5E7E99242DA430DB00843C13 /* HomeViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E99232DA430DB00843C13 /* HomeViewCollectionViewCell.swift */; };
+		5EDC0B302DA4B52400E85A8F /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDC0B2F2DA4B52400E85A8F /* QuestionViewController.swift */; };
+		5EDC0B322DA4B55100E85A8F /* QuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDC0B312DA4B55100E85A8F /* QuestionViewModel.swift */; };
+		5EDC0B442DA4BD0100E85A8F /* QuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDC0B432DA4BD0100E85A8F /* QuestionCollectionViewCell.swift */; };
 		5EE769B12D76BF21009DEB58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE769B02D76BF21009DEB58 /* AppDelegate.swift */; };
 		5EE769B32D76BF21009DEB58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE769B22D76BF21009DEB58 /* SceneDelegate.swift */; };
 		5EE769B52D76BF21009DEB58 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE769B42D76BF21009DEB58 /* ViewController.swift */; };
@@ -54,6 +60,12 @@
 		5E7E99172DA40F8E00843C13 /* RemoteQuestionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteQuestionDataSource.swift; sourceTree = "<group>"; };
 		5E7E99192DA40FCA00843C13 /* QuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRepository.swift; sourceTree = "<group>"; };
 		5E7E991C2DA4103100843C13 /* OpenAIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIResponse.swift; sourceTree = "<group>"; };
+		5E7E991F2DA42F2100843C13 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		5E7E99212DA42F9300843C13 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		5E7E99232DA430DB00843C13 /* HomeViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		5EDC0B2F2DA4B52400E85A8F /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		5EDC0B312DA4B55100E85A8F /* QuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewModel.swift; sourceTree = "<group>"; };
+		5EDC0B432DA4BD0100E85A8F /* QuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EE769AD2D76BF21009DEB58 /* Cosmo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cosmo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EE769B02D76BF21009DEB58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EE769B22D76BF21009DEB58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +159,26 @@
 				5E7E991C2DA4103100843C13 /* OpenAIResponse.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		5E7E991E2DA42EEF00843C13 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				5E7E991F2DA42F2100843C13 /* HomeViewController.swift */,
+				5E7E99212DA42F9300843C13 /* HomeViewModel.swift */,
+				5E7E99232DA430DB00843C13 /* HomeViewCollectionViewCell.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		5EDC0B2E2DA4B50B00E85A8F /* Question */ = {
+			isa = PBXGroup;
+			children = (
+				5EDC0B2F2DA4B52400E85A8F /* QuestionViewController.swift */,
+				5EDC0B312DA4B55100E85A8F /* QuestionViewModel.swift */,
+				5EDC0B432DA4BD0100E85A8F /* QuestionCollectionViewCell.swift */,
+			);
+			path = Question;
 			sourceTree = "<group>";
 		};
 		5EE769A42D76BF21009DEB58 = {
@@ -262,6 +294,8 @@
 		5EF2C50E2D9BCCDB00EA89C1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				5EDC0B2E2DA4B50B00E85A8F /* Question */,
+				5E7E991E2DA42EEF00843C13 /* Home */,
 				5EF2C50F2D9BCCE500EA89C1 /* OnBoarding */,
 			);
 			path = Presentation;
@@ -385,13 +419,19 @@
 				5E7E990E2DA40CA500843C13 /* Question.swift in Sources */,
 				5EF2C5242D9BDCD700EA89C1 /* OnBoardingPriorityCollectionViewCell.swift in Sources */,
 				5EF2C57C2DA28BCA00EA89C1 /* OnBoardingCompetencyCollectionViewCell.swift in Sources */,
+				5E7E99202DA42F2100843C13 /* HomeViewController.swift in Sources */,
 				5EF2C57A2DA2807000EA89C1 /* OnBoardingCompetencyViewController.swift in Sources */,
 				5E7E991D2DA4103100843C13 /* OpenAIResponse.swift in Sources */,
+				5EDC0B302DA4B52400E85A8F /* QuestionViewController.swift in Sources */,
+				5EDC0B442DA4BD0100E85A8F /* QuestionCollectionViewCell.swift in Sources */,
 				5E7E99162DA40D9400843C13 /* APIKeys.swift in Sources */,
 				5E7E991A2DA40FCA00843C13 /* QuestionRepository.swift in Sources */,
 				5E7E99182DA40F8E00843C13 /* RemoteQuestionDataSource.swift in Sources */,
 				5EF2C5222D9BDCA900EA89C1 /* OnBoardingPriorityViewController.swift in Sources */,
+				5E7E99242DA430DB00843C13 /* HomeViewCollectionViewCell.swift in Sources */,
 				5EE769B12D76BF21009DEB58 /* AppDelegate.swift in Sources */,
+				5E7E99222DA42F9300843C13 /* HomeViewModel.swift in Sources */,
+				5EDC0B322DA4B55100E85A8F /* QuestionViewModel.swift in Sources */,
 				5EE769B32D76BF21009DEB58 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,7 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 //        let navigationController = UINavigationController(rootViewController: CoinListViewController(viewModel: CoinListViewModel(marketService: UpbitMarketService())) )
-        window?.rootViewController = OnBoardingCompetencyViewController()
+        
+        let qusetionrepo = QuestionRepositoryImpl(remoteDataSource: RemoteQuestionDataSourceImpl())
+        let fetchQuestionsUseCase = FetchQuestionsUseCaseImpl(repository: qusetionrepo)
+        
+        let viewModel = HomeViewModel(fetchQuestionsUseCase: fetchQuestionsUseCase)
+        
+        window?.rootViewController = HomeViewController(viewModel: viewModel)
         window?.makeKeyAndVisible()
     }
 
