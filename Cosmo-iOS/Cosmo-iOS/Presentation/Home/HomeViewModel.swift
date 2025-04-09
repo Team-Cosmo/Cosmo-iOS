@@ -26,11 +26,11 @@ class HomeViewModel {
         }
         
         private let subjects = BehaviorRelay<[(String, String)]>(value: [
-            ("운영체제", "gear"),
-            ("자료구조", "list.bullet"),
-            ("알고리즘", "puzzlepiece"),
-            ("네트워크", "network"),
-            ("데이터베이스", "tablecells")
+            ("운영체제", "img_operatingsystem"),
+            ("자료구조", "img_datastructure"),
+            ("알고리즘", "img_algorithm"),
+            ("네트워크", "img_network"),
+            ("데이터베이스", "img_database")
         ])
         
         func getSubject(at index: Int) -> String {

@@ -73,14 +73,15 @@ class QuestionViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("제출할게요", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemGray
-        button.layer.cornerRadius = 8
+        button.setBackgroundImage(UIImage(named: "img_btn_cta"), for: .normal)
+//        button.backgroundColor = .black
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         return button
     }()
     
-    init(viewModel: QuestionViewModel) {
+    init(viewModel: QuestionViewModel, questions: [Question]) {
         self.viewModel = viewModel
+        self.questions = questions
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -117,7 +118,7 @@ class QuestionViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-20)
             make.width.height.equalTo(30)
         }
-    
+        
         view.addSubview(questionLabel)
         questionLabel.snp.makeConstraints { make in
             make.top.equalTo(closeButton.snp.bottom).offset(40)
@@ -142,21 +143,20 @@ class QuestionViewController: UIViewController {
         
         view.addSubview(submitButton)
         submitButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(50)
+            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(100)
         }
     }
     
     private func bind() {
-        // Input 정의
         let input = QuestionViewModel.Input(
+            questions: Observable.just(questions),
             closeTrigger: closeButton.rx.tap.asObservable(),
             menuTrigger: menuButton.rx.tap.asObservable(),
             helpTrigger: helpButton.rx.tap.asObservable(),
             submitTrigger: submitButton.rx.tap.asObservable(),
-            choiceSelected: choicesCollectionView.rx.itemSelected.map { $0.item },
-            startLearningTrigger: Observable.just(())
+            choiceSelected: choicesCollectionView.rx.itemSelected.map { $0.item }
         )
         
         let output = viewModel.transform(input: input)
@@ -189,6 +189,23 @@ class QuestionViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        choicesCollectionView.rx.itemSelected
+            .bind(with: self, onNext: { owner, indexPath in
+                let selectedIndex = indexPath.row
+                owner.selectedChoiceIndex.accept(selectedIndex)
+                
+                // 현재 보여지는 문제 인덱스
+                let currentIndex = owner.currentQuestionIndex.value
+                
+                // 선택한 인덱스가 정답인지 확인 (인덱스는 0부터 시작하므로 +1 필요)
+                let isCorrect = (selectedIndex + 1) == owner.questions[currentIndex].answer
+                print("선택: \(selectedIndex + 1), 정답: \(owner.questions[currentIndex].answer), 정답여부: \(isCorrect)")
+                
+                // 선택 상태 시각적으로 갱신
+                owner.choicesCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
         output.closeAction
             .drive(with: self, onNext: { owner, _ in
                 owner.dismiss(animated: true, completion: nil)
@@ -212,6 +229,7 @@ class QuestionViewController: UIViewController {
         output.nextQuestionAction
             .drive(with: self, onNext: { owner, _ in
                 print("Moved to next question")
+                owner.selectedChoiceIndex.accept(nil)
             })
             .disposed(by: disposeBag)
     }
@@ -224,6 +242,6 @@ class QuestionViewController: UIViewController {
         
         let nextIndex = currentQuestionIndex.value + 1
         currentQuestionIndex.accept(nextIndex)
-        selectedChoiceIndex.accept(nil) 
+        selectedChoiceIndex.accept(nil)
     }
 }
