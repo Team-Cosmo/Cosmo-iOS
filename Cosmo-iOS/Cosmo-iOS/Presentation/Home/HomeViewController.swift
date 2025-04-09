@@ -246,24 +246,6 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        //            output.fetchedQuestions
-        //                .drive(with: self, onNext: { owner, questions in
-        //                    owner.presentQuestionViewController(with: questions)
-        //                })
-        //                .disposed(by: disposeBag)
-        //
-        //            output.isLoading
-        //                .drive(with: self, onNext: { owner, value in
-        //                    if value {
-        //                        let activityIndicator = UIActivityIndicatorView(style: .large)
-        //                        activityIndicator.center = owner.view.center
-        //                        activityIndicator.startAnimating()
-        //                        owner.view.addSubview(activityIndicator)
-        //                    } else {
-        //                        owner.view.subviews.filter { $0 is UIActivityIndicatorView }.forEach { $0.removeFromSuperview() }
-        //                    }
-        //                })
-        //                .disposed(by: disposeBag)
         output.fetchedQuestions
             .drive(with: self, onNext: { owner, questions in
                 if !questions.isEmpty {

@@ -74,10 +74,12 @@ class QuestionViewController: UIViewController {
         button.setTitle("제출할게요", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setBackgroundImage(UIImage(named: "img_btn_cta"), for: .normal)
-//        button.backgroundColor = .black
+        //        button.backgroundColor = .black
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         return button
     }()
+    
+    private var answerStates: [AnswerState] = Array(repeating: .none, count: 4)
     
     init(viewModel: QuestionViewModel, questions: [Question]) {
         self.viewModel = viewModel
@@ -169,14 +171,17 @@ class QuestionViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.currentQuestion
-            .drive(with: self, onNext: { owner, question in
+            .drive(with: self) { owner, question in
                 guard let question = question else {
                     print("All questions completed")
                     owner.dismiss(animated: true, completion: nil)
                     return
                 }
                 owner.questionLabel.text = question.question
-            })
+                owner.selectedChoiceIndex.accept(nil)
+                owner.answerStates = Array(repeating: .none, count: 4)
+                owner.choicesCollectionView.reloadData()
+            }
             .disposed(by: disposeBag)
         
         output.questionCount
@@ -185,7 +190,10 @@ class QuestionViewController: UIViewController {
         
         output.choices
             .drive(choicesCollectionView.rx.items(cellIdentifier: QuestionCollectionViewCell.identifier, cellType: QuestionCollectionViewCell.self)) { [weak self] (row, choice, cell) in
-                cell.configure(with: choice, isSelected: row == self?.selectedChoiceIndex.value)
+                //                cell.configure(with: choice, isSelected: row == self?.selectedChoiceIndex.value)
+                let isSelected = row == self?.selectedChoiceIndex.value
+                let answerState = self?.answerStates[row] ?? .none
+                cell.configure(with: choice, isSelected: isSelected, answerState: answerState)
             }
             .disposed(by: disposeBag)
         
@@ -193,16 +201,7 @@ class QuestionViewController: UIViewController {
             .bind(with: self, onNext: { owner, indexPath in
                 let selectedIndex = indexPath.row
                 owner.selectedChoiceIndex.accept(selectedIndex)
-                
-                // 현재 보여지는 문제 인덱스
-                let currentIndex = owner.currentQuestionIndex.value
-                
-                // 선택한 인덱스가 정답인지 확인 (인덱스는 0부터 시작하므로 +1 필요)
-                let isCorrect = (selectedIndex + 1) == owner.questions[currentIndex].answer
-                print("선택: \(selectedIndex + 1), 정답: \(owner.questions[currentIndex].answer), 정답여부: \(isCorrect)")
-                
-                // 선택 상태 시각적으로 갱신
-                owner.choicesCollectionView.reloadData()
+                owner.choicesCollectionView.reloadData() // 선택 즉시 UI 갱신
             })
             .disposed(by: disposeBag)
         
@@ -227,21 +226,24 @@ class QuestionViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.nextQuestionAction
-            .drive(with: self, onNext: { owner, _ in
-                print("Moved to next question")
-                owner.selectedChoiceIndex.accept(nil)
-            })
+            .drive(with: self) { owner, result in
+                let (isCorrect, correctAnswerIndex) = result
+                guard let selectedIndex = owner.selectedChoiceIndex.value else { return }
+                
+                // 정답/오답 상태 즉시 반영
+                var answerStates = Array(repeating: AnswerState.none, count: 4)
+                if isCorrect {
+                    answerStates[selectedIndex] = .correct
+                    print("정답입니다!")
+                } else {
+                    answerStates[selectedIndex] = .wrong
+                    answerStates[correctAnswerIndex] = .correct
+                    print("오답입니다. 정답은 \(correctAnswerIndex + 1)번입니다.")
+                }
+                
+                owner.answerStates = answerStates
+                owner.choicesCollectionView.reloadData() // 즉시 UI 갱신
+            }
             .disposed(by: disposeBag)
-    }
-    
-    private func moveToNextQuestion() {
-        guard selectedChoiceIndex.value != nil else {
-            print("선지를 선택해주세요!")
-            return
-        }
-        
-        let nextIndex = currentQuestionIndex.value + 1
-        currentQuestionIndex.accept(nextIndex)
-        selectedChoiceIndex.accept(nil)
     }
 }
