@@ -7,7 +7,7 @@ xcuserdata/
 .DS_Store
 ## Obj-C/Swift specific
 *.hmap
-
+APIKeys.swift
 ## App packaging
 *.ipa
 *.dSYM.zip
