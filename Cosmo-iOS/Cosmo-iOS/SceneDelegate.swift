@@ -22,7 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let viewModel = HomeViewModel(fetchQuestionsUseCase: fetchQuestionsUseCase)
         
-        window?.rootViewController = HomeViewController(viewModel: viewModel)
+//        window?.rootViewController = HomeViewController(viewModel: viewModel)
+        
+        let navigationController = UINavigationController(rootViewController: OnBoardingPriorityViewController())
+        
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 

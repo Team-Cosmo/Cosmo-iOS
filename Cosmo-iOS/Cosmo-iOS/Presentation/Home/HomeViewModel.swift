@@ -11,11 +11,13 @@ import RxCocoa
 
 class HomeViewModel {
     private let disposeBag = DisposeBag()
-        private let fetchQuestionsUseCase: FetchQuestionsUseCase
-
+    private let fetchQuestionsUseCase: FetchQuestionsUseCase
+    private let progressRelay = BehaviorRelay<Int>(value: 0)
+    
         struct Input {
             let fetchQuestionsTrigger: Observable<String>
             let startLearningTrigger: Observable<Void>
+            let updateProgressTrigger: Observable<Int>
         }
         
         struct Output {
@@ -23,6 +25,7 @@ class HomeViewModel {
             let fetchedQuestions: Driver<[Question]>
             let isLoading: Driver<Bool>
             let errorMessage: Driver<String?>
+            let progress: Driver<Int>
         }
         
         private let subjects = BehaviorRelay<[(String, String)]>(value: [
@@ -45,6 +48,12 @@ class HomeViewModel {
         func transform(input: Input) -> Output {
             let isLoading = BehaviorRelay<Bool>(value: false)
             let errorMessage = BehaviorRelay<String?>(value: nil)
+            
+            input.updateProgressTrigger
+                .subscribe(onNext: { [weak self] correctCount in
+                    self?.progressRelay.accept(correctCount)
+                })
+                .disposed(by: disposeBag)
             
             let questions = Observable.merge(
                 input.fetchQuestionsTrigger.map { subject in (subject: subject, isAll: false) },
@@ -83,7 +92,8 @@ class HomeViewModel {
                 subjects: subjects.asDriver(),
                 fetchedQuestions: fetchedQuestions,
                 isLoading: isLoading.asDriver(),
-                errorMessage: errorMessage.asDriver()
+                errorMessage: errorMessage.asDriver(),
+                progress: progressRelay.asDriver()
             )
         }
 }

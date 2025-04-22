@@ -12,7 +12,7 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     
     private let choiceLabel: UILabel = {
            let label = UILabel()
-           label.font = .systemFont(ofSize: 16)
+        label.font = UIFont(name: "Pretendard-Bold", size: 18)
            label.textColor = .black
            label.numberOfLines = 0
            label.textAlignment = .left

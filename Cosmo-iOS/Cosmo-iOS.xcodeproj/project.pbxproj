@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E6302EC2DAB9CAE002BD2BC /* CrosshairCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6302EB2DAB9CAE002BD2BC /* CrosshairCollectionViewCell.swift */; };
+		5E75AE672DAD648400AED6D2 /* ResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E75AE662DAD648400AED6D2 /* ResultCollectionViewCell.swift */; };
+		5E75AE692DAD652B00AED6D2 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E75AE682DAD652B00AED6D2 /* ResultViewController.swift */; };
 		5E7E990E2DA40CA500843C13 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E990D2DA40CA500843C13 /* Question.swift */; };
 		5E7E99112DA40CD200843C13 /* FetchQuestionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E99102DA40CD200843C13 /* FetchQuestionsUseCase.swift */; };
 		5E7E99162DA40D9400843C13 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E99152DA40D9400843C13 /* APIKeys.swift */; };
@@ -54,6 +57,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E6302EB2DAB9CAE002BD2BC /* CrosshairCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrosshairCollectionViewCell.swift; sourceTree = "<group>"; };
+		5E75AE662DAD648400AED6D2 /* ResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCollectionViewCell.swift; sourceTree = "<group>"; };
+		5E75AE682DAD652B00AED6D2 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		5E7E990D2DA40CA500843C13 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		5E7E99102DA40CD200843C13 /* FetchQuestionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchQuestionsUseCase.swift; sourceTree = "<group>"; };
 		5E7E99152DA40D9400843C13 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
@@ -113,6 +119,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E75AE652DAD646700AED6D2 /* Result */ = {
+			isa = PBXGroup;
+			children = (
+				5E75AE662DAD648400AED6D2 /* ResultCollectionViewCell.swift */,
+				5E75AE682DAD652B00AED6D2 /* ResultViewController.swift */,
+			);
+			path = Result;
+			sourceTree = "<group>";
+		};
 		5E7E990C2DA40C9700843C13 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +182,7 @@
 				5E7E991F2DA42F2100843C13 /* HomeViewController.swift */,
 				5E7E99212DA42F9300843C13 /* HomeViewModel.swift */,
 				5E7E99232DA430DB00843C13 /* HomeViewCollectionViewCell.swift */,
+				5E6302EB2DAB9CAE002BD2BC /* CrosshairCollectionViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -294,6 +310,7 @@
 		5EF2C50E2D9BCCDB00EA89C1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				5E75AE652DAD646700AED6D2 /* Result */,
 				5EDC0B2E2DA4B50B00E85A8F /* Question */,
 				5E7E991E2DA42EEF00843C13 /* Home */,
 				5EF2C50F2D9BCCE500EA89C1 /* OnBoarding */,
@@ -418,6 +435,7 @@
 				5EE769B52D76BF21009DEB58 /* ViewController.swift in Sources */,
 				5E7E990E2DA40CA500843C13 /* Question.swift in Sources */,
 				5EF2C5242D9BDCD700EA89C1 /* OnBoardingPriorityCollectionViewCell.swift in Sources */,
+				5E75AE672DAD648400AED6D2 /* ResultCollectionViewCell.swift in Sources */,
 				5EF2C57C2DA28BCA00EA89C1 /* OnBoardingCompetencyCollectionViewCell.swift in Sources */,
 				5E7E99202DA42F2100843C13 /* HomeViewController.swift in Sources */,
 				5EF2C57A2DA2807000EA89C1 /* OnBoardingCompetencyViewController.swift in Sources */,
@@ -425,6 +443,7 @@
 				5EDC0B302DA4B52400E85A8F /* QuestionViewController.swift in Sources */,
 				5EDC0B442DA4BD0100E85A8F /* QuestionCollectionViewCell.swift in Sources */,
 				5E7E99162DA40D9400843C13 /* APIKeys.swift in Sources */,
+				5E6302EC2DAB9CAE002BD2BC /* CrosshairCollectionViewCell.swift in Sources */,
 				5E7E991A2DA40FCA00843C13 /* QuestionRepository.swift in Sources */,
 				5E7E99182DA40F8E00843C13 /* RemoteQuestionDataSource.swift in Sources */,
 				5EF2C5222D9BDCA900EA89C1 /* OnBoardingPriorityViewController.swift in Sources */,
@@ -433,6 +452,7 @@
 				5E7E99222DA42F9300843C13 /* HomeViewModel.swift in Sources */,
 				5EDC0B322DA4B55100E85A8F /* QuestionViewModel.swift in Sources */,
 				5EE769B32D76BF21009DEB58 /* SceneDelegate.swift in Sources */,
+				5E75AE692DAD652B00AED6D2 /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

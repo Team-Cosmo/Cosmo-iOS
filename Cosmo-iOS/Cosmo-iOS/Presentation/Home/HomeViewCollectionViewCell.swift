@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class HomeViewCollectionViewCell: UICollectionViewCell {
     static let identifier = "HomeViewCollectionViewCell"
@@ -41,13 +42,12 @@ class HomeViewCollectionViewCell: UICollectionViewCell {
             contentView.addSubview(label)
             
             imageView.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.top.equalToSuperview().offset(10)
+                make.center.equalToSuperview()
                 make.width.height.equalTo(30)
             }
             
             label.snp.makeConstraints { make in
-                make.top.equalTo(imageView.snp.bottom).offset(5)
+                make.top.equalTo(imageView.snp.bottom).inset(-20)
                 make.leading.trailing.equalToSuperview()
             }
         }

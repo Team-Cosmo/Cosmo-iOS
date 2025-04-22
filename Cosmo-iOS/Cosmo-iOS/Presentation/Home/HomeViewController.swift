@@ -21,10 +21,11 @@ class HomeViewController: UIViewController {
             }
     }()
     
-    private let headerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.layer.cornerRadius = 10
+    private let progressUpdateRelay = PublishRelay<Int>()
+    
+    private let headerView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "img_home")
         return view
     }()
     
@@ -32,7 +33,7 @@ class HomeViewController: UIViewController {
         let label = UILabel()
         label.text = "오늘의 학습 타겟"
         label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont(name: "Pretendard-Bold", size: 22)
         return label
     }()
     
@@ -40,8 +41,22 @@ class HomeViewController: UIViewController {
         let label = UILabel()
         label.text = "0/10 완료"
         label.textColor = .white
-        label.font = .systemFont(ofSize: 16)
+        label.font = UIFont(name: "DOSGothic", size: 50)
+        
         return label
+    }()
+    
+    private lazy var progressCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 5
+        layout.itemSize = CGSize(width: 24, height: 24)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isUserInteractionEnabled = false
+        return collectionView
     }()
     
     private let subjectCollectionView: UICollectionView = {
@@ -116,8 +131,8 @@ class HomeViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("학습하러 가기", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 10
+        button.setBackgroundImage(UIImage(named: "img_btn_cta"), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 22)
         return button
     }()
     
@@ -142,25 +157,32 @@ class HomeViewController: UIViewController {
         
         view.addSubview(headerView)
         headerView.addSubview(headerLabel)
+        headerView.addSubview(progressCollectionView)
         headerView.addSubview(progressLabel)
         
         headerView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(100)
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(UIScreen.main.bounds.height / 3)
         }
         
         headerLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.leading.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height / 9)
+        }
+        
+        progressCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(progressLabel.snp.bottom).offset(15)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(24)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.7) // 필요에 따라 너비 조정
         }
         
         progressLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
             make.top.equalTo(headerLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(20)
         }
         
-        // 과목 선택 섹션
         view.addSubview(subjectTitleLabel)
         view.addSubview(subjectCollectionView)
         
@@ -170,9 +192,9 @@ class HomeViewController: UIViewController {
         }
         
         subjectCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(subjectTitleLabel.snp.bottom).offset(10)
+            make.top.equalTo(subjectTitleLabel.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(80)
+            make.height.equalTo(UIScreen.main.bounds.height / 8)
         }
         
         view.addSubview(storageBoxView)
@@ -221,20 +243,24 @@ class HomeViewController: UIViewController {
         view.addSubview(startButton)
         
         startButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(50)
+            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(100)
         }
     }
     
     private func setupCollectionView() {
         subjectCollectionView.register(HomeViewCollectionViewCell.self, forCellWithReuseIdentifier: HomeViewCollectionViewCell.identifier)
+        progressCollectionView.register(CrosshairCollectionViewCell.self, forCellWithReuseIdentifier: CrosshairCollectionViewCell.identifier)
+        
+        //        setupProgressCrosshairs(completedCount: 0)
     }
     
     private func bind() {
         let input = HomeViewModel.Input(
             fetchQuestionsTrigger: fetchQuestionsTrigger(),
-            startLearningTrigger: startButton.rx.tap.asObservable()
+            startLearningTrigger: startButton.rx.tap.asObservable(),
+            updateProgressTrigger: progressUpdateRelay.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -256,12 +282,26 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        output.progress
+            .drive(onNext: { [weak self] correctCount in
+                self?.updateProgressView(correctCount: correctCount)
+            })
+            .disposed(by: disposeBag)
+        
+        //        QuestionViewController.
+        //            .bind(with: self, onNext: { owner, value in
+        //                owner.updateProgressView(correctCount: value)
+        //            })
+        //            .disposed(by: disposeBag)
+        
         output.isLoading
             .drive(with: self, onNext: { owner, isLoading in
                 if isLoading {
                     owner.showLoadingIndicator()
+                    owner.disableUI()
                 } else {
                     owner.hideLoadingIndicator()
+                    owner.enableUI()
                 }
             })
             .disposed(by: disposeBag)
@@ -274,7 +314,9 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-    
+}
+
+extension HomeViewController {
     private func fetchQuestionsTrigger() -> Observable<String> {
         return subjectSelectionObservable
             .do(onNext: { subject in
@@ -282,6 +324,17 @@ class HomeViewController: UIViewController {
             })
     }
     
+    private func updateProgressView(correctCount: Int) {
+        let dataSource = Array(0..<10).map { $0 < correctCount }
+        
+        Observable.just(dataSource)
+            .bind(to: progressCollectionView.rx.items(cellIdentifier: CrosshairCollectionViewCell.identifier, cellType: CrosshairCollectionViewCell.self)) { index, isFilled, cell in
+                cell.configure(filled: isFilled)
+            }
+            .disposed(by: disposeBag)
+        
+        progressLabel.text = "\(correctCount)/10 완료"
+    }
     
     private func showLoadingIndicator() {
         let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -307,4 +360,19 @@ class HomeViewController: UIViewController {
         self.present(questionViewController, animated: true, completion: nil)
     }
     
+    private func disableUI() {
+        startButton.isEnabled = false
+        subjectCollectionView.isUserInteractionEnabled = false
+        storageBoxView.isUserInteractionEnabled = false
+        questionBoxView.isUserInteractionEnabled = false
+        print("UI Disabled")
+    }
+    
+    private func enableUI() {
+        startButton.isEnabled = true
+        subjectCollectionView.isUserInteractionEnabled = true
+        storageBoxView.isUserInteractionEnabled = true
+        questionBoxView.isUserInteractionEnabled = true
+        print("UI Enabled")
+    }
 }
