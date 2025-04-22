@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -102,6 +102,10 @@
 		5EF2C5792DA2807000EA89C1 /* OnBoardingCompetencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCompetencyViewController.swift; sourceTree = "<group>"; };
 		5EF2C57B2DA28BCA00EA89C1 /* OnBoardingCompetencyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCompetencyCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5E6D8D412DB7621900B0AAC7 /* Manager */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Manager; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5EE769AA2D76BF21009DEB58 /* Frameworks */ = {
@@ -216,6 +220,7 @@
 		5EE769AF2D76BF21009DEB58 /* Cosmo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				5E6D8D412DB7621900B0AAC7 /* Manager */,
 				5E7E99142DA40D8700843C13 /* Key */,
 				5EF2C50E2D9BCCDB00EA89C1 /* Presentation */,
 				5EF2C4972D95414C00EA89C1 /* Resources */,
@@ -351,6 +356,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5E6D8D412DB7621900B0AAC7 /* Manager */,
 			);
 			name = "Cosmo-iOS";
 			productName = "Cosmo-iOS";

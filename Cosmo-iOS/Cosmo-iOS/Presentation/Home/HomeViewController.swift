@@ -95,37 +95,37 @@ class HomeViewController: UIViewController {
         return label
     }()
     
-    private let storageTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "내가 저장한 문제"
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        return label
-    }()
-    
-    private let questionBoxView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray.withAlphaComponent(0.3)
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    private let questionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "그레이"
-        label.textAlignment = .center
-        label.textColor = .gray
-        label.font = .systemFont(ofSize: 14)
-        return label
-    }()
-    
-    private let questionTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "남겨놓은 학습 기록"
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        return label
-    }()
+//    private let storageTitleLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "내가 저장한 문제"
+//        label.textAlignment = .center
+//        label.font = .systemFont(ofSize: 14, weight: .medium)
+//        return label
+//    }()
+//    
+//    private let questionBoxView: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .lightGray.withAlphaComponent(0.3)
+//        view.layer.cornerRadius = 10
+//        return view
+//    }()
+//    
+//    private let questionLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "그레이"
+//        label.textAlignment = .center
+//        label.textColor = .gray
+//        label.font = .systemFont(ofSize: 14)
+//        return label
+//    }()
+//    
+//    private let questionTitleLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "남겨놓은 학습 기록"
+//        label.textAlignment = .center
+//        label.font = .systemFont(ofSize: 14, weight: .medium)
+//        return label
+//    }()
     
     private let startButton: UIButton = {
         let button = UIButton(type: .system)
@@ -198,13 +198,13 @@ class HomeViewController: UIViewController {
         }
         
         view.addSubview(storageBoxView)
-        view.addSubview(questionBoxView)
+//        view.addSubview(questionBoxView)
         
-        storageBoxView.addSubview(storageTitleLabel)
+//        storageBoxView.addSubview(storageTitleLabel)
         storageBoxView.addSubview(storageLabel)
         
-        questionBoxView.addSubview(questionTitleLabel)
-        questionBoxView.addSubview(questionLabel)
+//        questionBoxView.addSubview(questionTitleLabel)
+//        questionBoxView.addSubview(questionLabel)
         
         storageBoxView.snp.makeConstraints { make in
             make.top.equalTo(subjectCollectionView.snp.bottom).offset(20)
@@ -213,32 +213,32 @@ class HomeViewController: UIViewController {
             make.height.equalTo(100)
         }
         
-        questionBoxView.snp.makeConstraints { make in
-            make.top.equalTo(subjectCollectionView.snp.bottom).offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.width.equalTo((view.frame.width - 50) / 2)
-            make.height.equalTo(100)
-        }
-        
-        storageTitleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.centerX.equalToSuperview()
-        }
-        
-        storageLabel.snp.makeConstraints { make in
-            make.top.equalTo(storageTitleLabel.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
-        }
-        
-        questionTitleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.centerX.equalToSuperview()
-        }
-        
-        questionLabel.snp.makeConstraints { make in
-            make.top.equalTo(questionTitleLabel.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
-        }
+//        questionBoxView.snp.makeConstraints { make in
+//            make.top.equalTo(subjectCollectionView.snp.bottom).offset(20)
+//            make.trailing.equalToSuperview().offset(-20)
+//            make.width.equalTo((view.frame.width - 50) / 2)
+//            make.height.equalTo(100)
+//        }
+//        
+//        storageTitleLabel.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(20)
+//            make.centerX.equalToSuperview()
+//        }
+//        
+//        storageLabel.snp.makeConstraints { make in
+//            make.top.equalTo(storageTitleLabel.snp.bottom).offset(10)
+//            make.centerX.equalToSuperview()
+//        }
+//        
+//        questionTitleLabel.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(20)
+//            make.centerX.equalToSuperview()
+//        }
+//        
+//        questionLabel.snp.makeConstraints { make in
+//            make.top.equalTo(questionTitleLabel.snp.bottom).offset(10)
+//            make.centerX.equalToSuperview()
+//        }
         
         view.addSubview(startButton)
         
@@ -364,7 +364,7 @@ extension HomeViewController {
         startButton.isEnabled = false
         subjectCollectionView.isUserInteractionEnabled = false
         storageBoxView.isUserInteractionEnabled = false
-        questionBoxView.isUserInteractionEnabled = false
+//        questionBoxView.isUserInteractionEnabled = false
         print("UI Disabled")
     }
     
@@ -372,7 +372,7 @@ extension HomeViewController {
         startButton.isEnabled = true
         subjectCollectionView.isUserInteractionEnabled = true
         storageBoxView.isUserInteractionEnabled = true
-        questionBoxView.isUserInteractionEnabled = true
+//        questionBoxView.isUserInteractionEnabled = true
         print("UI Enabled")
     }
 }

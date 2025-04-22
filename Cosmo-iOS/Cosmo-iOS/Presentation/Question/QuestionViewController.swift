@@ -18,10 +18,8 @@ class QuestionViewController: UIViewController {
     private let selectedChoiceIndex = BehaviorRelay<Int?>(value: nil)
 //    let quizCompletedSubject = PublishSubject<Int>()
     
-    // 문제별 결과를 저장할 배열
     private var questionResults: [QuestionResult] = []
     
-    // 결과를 전달할 클로저
     var completionHandler: (([QuestionResult]) -> Void)?
     
     private let closeButton: UIButton = {
@@ -81,7 +79,6 @@ class QuestionViewController: UIViewController {
         button.setTitle("제출할게요", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setBackgroundImage(UIImage(named: "img_btn_cta"), for: .normal)
-        //        button.backgroundColor = .black
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         return button
     }()
@@ -237,12 +234,10 @@ class QuestionViewController: UIViewController {
             .drive(with: self) { owner, result in
                 let (isCorrect, correctAnswerIndex) = result
                 
-                // 현재 문제의 인덱스
                 let currentIndex = owner.currentQuestionIndex.value
                 
-                // QuestionResult 생성 및 저장
                 let question = owner.questions[currentIndex]
-                let correctAnswerText = question.choices[question.answer - 1] // answer는 1-based 인덱스
+                let correctAnswerText = question.choices[question.answer - 1]
                 let result = QuestionResult(
                     question: question.question,
                     answer: correctAnswerText,
@@ -250,12 +245,10 @@ class QuestionViewController: UIViewController {
                 )
                 owner.questionResults.append(result)
                 
-                // 마지막 문제인지 확인
                 let isLastQuestion = currentIndex == owner.questions.count - 1
                 
                 guard let selectedIndex = owner.selectedChoiceIndex.value else { return }
                 
-                // 정답/오답 상태 즉시 반영
                 var answerStates = Array(repeating: AnswerState.none, count: 4)
                 if isCorrect {
                     answerStates[selectedIndex] = .correct
@@ -267,9 +260,10 @@ class QuestionViewController: UIViewController {
                 }
                 
                 owner.answerStates = answerStates
-                owner.choicesCollectionView.reloadData() // 즉시 UI 갱신
+                owner.choicesCollectionView.reloadData()
                 
-                // 마지막 문제라면 1.5초 후 ResultViewController로 전환
+                owner.choicesCollectionView.isUserInteractionEnabled = false
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     if isLastQuestion {
                         print("Moving to ResultViewController")
@@ -278,6 +272,8 @@ class QuestionViewController: UIViewController {
                         let resultVC = ResultViewController(results: owner.questionResults)
                         owner.modalPresentationStyle = .fullScreen
                         owner.present(resultVC, animated: true, completion: nil)
+                        
+                        owner.choicesCollectionView.isUserInteractionEnabled = true
                     } else {
                         let nextIndex = currentIndex + 1
                         owner.currentQuestionIndex.accept(nextIndex)
