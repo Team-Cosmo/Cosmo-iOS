@@ -1,0 +1,23 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="34" height="34" rx="14" fill="#202020"/>
+<path d="M6 20L7 19H8H9L10 20V21V22L9 23H8H7L6 22V21V20Z" fill="white"/>
+<path d="M12 13L13 12H14H15L16 13V14V15L15 16H14H13L12 15V14V13Z" fill="white"/>
+<path d="M18 19L19 18H20H21L22 19V20V21L21 22H20H19L18 21V20V19Z" fill="white"/>
+<path d="M24 12L25 11H26H27L28 12V13V14L27 15H26H25L24 14V13V12Z" fill="white"/>
+<path d="M7 20.5L7.5 20H8H8.5L9 20.5V21V21.5L8.5 22H8H7.5L7 21.5V21V20.5Z" fill="#202020"/>
+<path d="M13 13.5L13.5 13H14H14.5L15 13.5V14V14.5L14.5 15H14H13.5L13 14.5V14V13.5Z" fill="#202020"/>
+<path d="M19 19.5L19.5 19H20H20.5L21 19.5V20V20.5L20.5 21H20H19.5L19 20.5V20V19.5Z" fill="#202020"/>
+<path d="M25 12.5L25.5 12H26H26.5L27 12.5V13V13.5L26.5 14H26H25.5L25 13.5V13V12.5Z" fill="#202020"/>
+<rect x="11" y="16" width="1" height="1" fill="white"/>
+<rect x="12" y="15" width="1" height="1" fill="white"/>
+<rect width="1" height="1" transform="matrix(-1 0 0 1 16 15)" fill="white"/>
+<rect x="24" y="15" width="1" height="1" fill="white"/>
+<rect x="10" y="17" width="1" height="1" fill="white"/>
+<rect width="1" height="1" transform="matrix(-1 0 0 1 17 16)" fill="white"/>
+<rect x="23" y="16" width="1" height="1" fill="white"/>
+<rect x="9" y="18" width="1" height="1" fill="white"/>
+<rect width="1" height="1" transform="matrix(-1 0 0 1 19 18)" fill="white"/>
+<rect x="21" y="18" width="1" height="1" fill="white"/>
+<rect width="1" height="1" transform="matrix(-1 0 0 1 18 17)" fill="white"/>
+<rect x="22" y="17" width="1" height="1" fill="white"/>
+</svg>
