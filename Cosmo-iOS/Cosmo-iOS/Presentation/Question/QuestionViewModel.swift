@@ -16,7 +16,7 @@ class QuestionViewModel {
     struct Input {
         let questions: Observable<[Question]>
         let closeTrigger: Observable<Void>
-        let menuTrigger: Observable<Void>
+//        let menuTrigger: Observable<Void>
 //        let helpTrigger: Observable<Void>
         let submitTrigger: Observable<Void>
         let choiceSelected: Observable<Int>
@@ -28,7 +28,7 @@ class QuestionViewModel {
         let questionCount: Driver<String>
         let choices: Driver<[String]>
         let closeAction: Driver<Void>
-        let menuAction: Driver<Void>
+//        let menuAction: Driver<Void>
 //        let helpAction: Driver<Void>
         let nextQuestionAction: Driver<(Bool, Int)> // (isCorrect, correctAnswerIndex) 반환
     }
@@ -47,32 +47,30 @@ class QuestionViewModel {
             .disposed(by: disposeBag)
         
         let closeAction = input.closeTrigger.asDriver(onErrorJustReturn: ())
-        let menuAction = input.menuTrigger.asDriver(onErrorJustReturn: ())
+//        let menuAction = input.menuTrigger.asDriver(onErrorJustReturn: ())
 //        let helpAction = input.helpTrigger.asDriver(onErrorJustReturn: ())
         
         input.choiceSelected
             .bind(to: selectedChoiceIndex)
             .disposed(by: disposeBag)
         
-        // 제출 버튼 트리거 처리: 정답 여부와 정답 인덱스만 반환
         let nextQuestionAction = input.submitTrigger
             .withLatestFrom(Observable.combineLatest(
                 questionsRelay,
                 currentQuestionIndex,
                 selectedChoiceIndex
             ))
-            .filter { _, _, selectedIndex in selectedIndex != nil } // 선택된 답변이 있어야 진행
+            .filter { _, _, selectedIndex in selectedIndex != nil }
             .flatMap { [weak self] questions, currentIndex, selectedIndex -> Observable<(Bool, Int)> in
                 guard let self = self, let selectedIndex = selectedIndex else { return .just((false, 0)) }
                 let correctAnswerIndex = questions[currentIndex].answer - 1
                 let isCorrect = selectedIndex == correctAnswerIndex
                 
-                // 1.5초 후 다음 문제로 이동
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     let nextIndex = currentIndex + 1
                     if nextIndex < questions.count {
                         self.currentQuestionIndex.accept(nextIndex)
-                        self.selectedChoiceIndex.accept(nil) // 선택 초기화
+                        self.selectedChoiceIndex.accept(nil)
                     }
                 }
                 
@@ -100,7 +98,6 @@ class QuestionViewModel {
             questionCount: questionCountOutput,
             choices: choicesOutput,
             closeAction: closeAction,
-            menuAction: menuAction,
             nextQuestionAction: nextQuestionAction
         )
     }

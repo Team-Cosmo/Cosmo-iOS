@@ -21,13 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let viewModel = HomeViewModel(fetchQuestionsUseCase: fetchQuestionsUseCase)
         
-        let navigationController = UINavigationController(rootViewController: OnBoardingPriorityViewController())
-        
         window?.rootViewController = UserDefaultsManager.shared.isStart
         ? HomeViewController(viewModel: viewModel)
         : UINavigationController(rootViewController: OnBoardingPriorityViewController())
-        
-//        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 

@@ -28,14 +28,17 @@ class ResultViewController: UIViewController {
         let label = UILabel()
         label.text = "오늘의 학습 완료"
         label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont(name: "Pretendard-Bold", size: 22)
         return label
     }()
     
     private let progressLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 16)
+        label.font = UIFont(name: "Pretendard-Bold", size: 22)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        
         return label
     }()
     
@@ -81,12 +84,12 @@ class ResultViewController: UIViewController {
         setupCollectionView()
         bind()
         
-//        correctCount()
+        correctCount()
         headerView.isUserInteractionEnabled = true
     }
     
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .gray200
         
         view.addSubview(headerView)
         headerView.addSubview(headerLabel)
@@ -96,7 +99,7 @@ class ResultViewController: UIViewController {
         headerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(UIScreen.main.bounds.height / 5)
+            make.height.equalTo(UIScreen.main.bounds.height / 4)
         }
         
         headerLabel.snp.makeConstraints { make in
@@ -149,5 +152,6 @@ extension ResultViewController {
     private func correctCount() {
         let correctCount = results.filter { $0.isCorrect }.count
         progressLabel.text = "10문제 중\n \(correctCount)문제 명중했어요!"
+        print(correctCount)
     }
 }

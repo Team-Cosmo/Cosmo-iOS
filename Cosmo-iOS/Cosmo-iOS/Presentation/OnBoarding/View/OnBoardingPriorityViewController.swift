@@ -81,11 +81,25 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         return stackView
     }()
     
+//    private let collectionView: UICollectionView = {
+//        let layout = UICollectionViewFlowLayout()
+//        layout.scrollDirection = .vertical
+//        layout.minimumLineSpacing = 10
+//        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 60, height: 54)
+//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collectionView.register(OnBoardingPriorityCollectionViewCell.self, forCellWithReuseIdentifier: OnBoardingPriorityCollectionViewCell.identifier)
+//        collectionView.backgroundColor = .gray200
+//        collectionView.contentInset = .zero
+//        return collectionView
+//    }()
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 60, height: 54)
+        // 화면 너비 - 50 (rankStackView 너비 20 + left 오프셋 10 + right 오프셋 20)
+        let itemWidth = UIScreen.main.bounds.width - 50
+        layout.itemSize = CGSize(width: itemWidth, height: 54)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(OnBoardingPriorityCollectionViewCell.self, forCellWithReuseIdentifier: OnBoardingPriorityCollectionViewCell.identifier)
         collectionView.backgroundColor = .gray200
@@ -131,6 +145,7 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         bind()
         setupLongPressGesture()
         collectionView.contentOffset = .zero
+        setBackButton()
     }
     
     private func setupUI() {
@@ -169,8 +184,8 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(shuffleImageView.snp.bottom).offset(20)
-            make.left.equalTo(rankStackView.snp.right).offset(10)
-            make.right.equalToSuperview().offset(-20)
+            make.left.equalTo(rankStackView.snp.right)
+            make.right.equalToSuperview().offset(-10)
             make.bottom.equalTo(downloadImageView.snp.top).offset(-20)
         }
         
@@ -328,6 +343,27 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
             self.isDragging = false
             self.didEndDrop()
         }
+    }
+    
+    private func setBackButton() {
+//        let backButton = UIBarButtonItem(
+//            image: UIImage(named: "img_arrow_left_white"),
+//            style: .plain,
+//            target: nil,
+//            action: nil
+//        )
+//        backButton.tintColor = .black
+//        self.navigationItem.backBarButtonItem = backButton
+//        
+        let backImage = UIImage(named: "img_arrow_left_white")
+
+        self.navigationController?.navigationBar.backIndicatorImage = backImage
+
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
+        
+        self.navigationController?.navigationBar.tintColor = .black
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     // MARK: - DragDropStackViewDelegate

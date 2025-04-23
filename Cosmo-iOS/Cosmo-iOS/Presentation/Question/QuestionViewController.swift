@@ -37,17 +37,17 @@ class QuestionViewController: UIViewController {
         return label
     }()
     
-    private let menuButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
-        button.tintColor = .black
-        return button
-    }()
+//    private let menuButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
+//        button.tintColor = .black
+//        return button
+//    }()
     
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont(name: "Pretendard-Bold", size: 18)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -79,7 +79,7 @@ class QuestionViewController: UIViewController {
         button.setTitle("제출할게요", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setBackgroundImage(UIImage(named: "img_btn_cta"), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 22)
         return button
     }()
     
@@ -102,11 +102,11 @@ class QuestionViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .gray200
         
         view.addSubview(closeButton)
         view.addSubview(questionNumberLabel)
-        view.addSubview(menuButton)
+//        view.addSubview(menuButton)
         
         closeButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
@@ -119,11 +119,11 @@ class QuestionViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
-        menuButton.snp.makeConstraints { make in
-            make.centerY.equalTo(closeButton)
-            make.trailing.equalToSuperview().offset(-20)
-            make.width.height.equalTo(30)
-        }
+//        menuButton.snp.makeConstraints { make in
+//            make.centerY.equalTo(closeButton)
+//            make.trailing.equalToSuperview().offset(-20)
+//            make.width.height.equalTo(30)
+//        }
         
         view.addSubview(questionLabel)
         questionLabel.snp.makeConstraints { make in
@@ -159,7 +159,6 @@ class QuestionViewController: UIViewController {
         let input = QuestionViewModel.Input(
             questions: Observable.just(questions),
             closeTrigger: closeButton.rx.tap.asObservable(),
-            menuTrigger: menuButton.rx.tap.asObservable(),
             submitTrigger: submitButton.rx.tap.asObservable(),
             choiceSelected: choicesCollectionView.rx.itemSelected.map { $0.item }
         )
@@ -198,6 +197,7 @@ class QuestionViewController: UIViewController {
                 let isSelected = row == self?.selectedChoiceIndex.value
                 let answerState = self?.answerStates[row] ?? .none
                 cell.configure(with: choice, isSelected: isSelected, answerState: answerState)
+            
             }
             .disposed(by: disposeBag)
         
@@ -216,12 +216,12 @@ class QuestionViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.menuAction
-            .drive(with: self, onNext: { owner, _ in
-                print("Menu button tapped")
-                // TODO: 메뉴 화면으로 전환
-            })
-            .disposed(by: disposeBag)
+//        output.menuAction
+//            .drive(with: self, onNext: { owner, _ in
+//                print("Menu button tapped")
+//                // TODO: 메뉴 화면으로 전환
+//            })
+//            .disposed(by: disposeBag)
         
 //        output.helpAction
 //            .drive(with: self, onNext: { owner, _ in

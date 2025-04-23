@@ -56,7 +56,7 @@ class OnBoardingCompetencyViewController: UIViewController {
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 80)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(OnBoardingCompetencyCollectionViewCell.self, forCellWithReuseIdentifier: OnBoardingCompetencyCollectionViewCell.identifier)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .gray200
         return collectionView
     }()
     
@@ -88,7 +88,7 @@ class OnBoardingCompetencyViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .gray200
         
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
