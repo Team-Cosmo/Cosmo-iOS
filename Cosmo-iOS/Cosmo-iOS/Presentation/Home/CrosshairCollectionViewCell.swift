@@ -33,5 +33,8 @@ class CrosshairCollectionViewCell: UICollectionViewCell {
            imageView.image = filled ?
                UIImage(named: "img_crosshair_filled") :
                UIImage(named: "img_crosshair_empty")
+           
+           imageView.image = UIImage(named: "img_crosshair_empty")
+           imageView.tintColor = filled ? UIColor.customRed : UIColor.customBlue
        }
 }

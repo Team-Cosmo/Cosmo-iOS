@@ -17,7 +17,7 @@ class QuestionViewModel {
         let questions: Observable<[Question]>
         let closeTrigger: Observable<Void>
         let menuTrigger: Observable<Void>
-        let helpTrigger: Observable<Void>
+//        let helpTrigger: Observable<Void>
         let submitTrigger: Observable<Void>
         let choiceSelected: Observable<Int>
     }
@@ -29,7 +29,7 @@ class QuestionViewModel {
         let choices: Driver<[String]>
         let closeAction: Driver<Void>
         let menuAction: Driver<Void>
-        let helpAction: Driver<Void>
+//        let helpAction: Driver<Void>
         let nextQuestionAction: Driver<(Bool, Int)> // (isCorrect, correctAnswerIndex) 반환
     }
     
@@ -48,7 +48,7 @@ class QuestionViewModel {
         
         let closeAction = input.closeTrigger.asDriver(onErrorJustReturn: ())
         let menuAction = input.menuTrigger.asDriver(onErrorJustReturn: ())
-        let helpAction = input.helpTrigger.asDriver(onErrorJustReturn: ())
+//        let helpAction = input.helpTrigger.asDriver(onErrorJustReturn: ())
         
         input.choiceSelected
             .bind(to: selectedChoiceIndex)
@@ -101,7 +101,6 @@ class QuestionViewModel {
             choices: choicesOutput,
             closeAction: closeAction,
             menuAction: menuAction,
-            helpAction: helpAction,
             nextQuestionAction: nextQuestionAction
         )
     }

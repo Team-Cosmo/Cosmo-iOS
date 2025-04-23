@@ -64,15 +64,15 @@ class QuestionViewController: UIViewController {
         return collectionView
     }()
     
-    private let helpButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("HELP AI", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 20
-        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
-        return button
-    }()
+//    private let helpButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setTitle("HELP AI", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        button.backgroundColor = .systemBlue
+//        button.layer.cornerRadius = 20
+//        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
+//        return button
+//    }()
     
     private let submitButton: UIButton = {
         let button = UIButton(type: .system)
@@ -139,13 +139,13 @@ class QuestionViewController: UIViewController {
             make.height.equalTo(300)
         }
         
-        view.addSubview(helpButton)
-        helpButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-80)
-            make.trailing.equalToSuperview().offset(-20)
-            make.width.equalTo(80)
-            make.height.equalTo(40)
-        }
+//        view.addSubview(helpButton)
+//        helpButton.snp.makeConstraints { make in
+//            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-80)
+//            make.trailing.equalToSuperview().offset(-20)
+//            make.width.equalTo(80)
+//            make.height.equalTo(40)
+//        }
         
         view.addSubview(submitButton)
         submitButton.snp.makeConstraints { make in
@@ -160,7 +160,6 @@ class QuestionViewController: UIViewController {
             questions: Observable.just(questions),
             closeTrigger: closeButton.rx.tap.asObservable(),
             menuTrigger: menuButton.rx.tap.asObservable(),
-            helpTrigger: helpButton.rx.tap.asObservable(),
             submitTrigger: submitButton.rx.tap.asObservable(),
             choiceSelected: choicesCollectionView.rx.itemSelected.map { $0.item }
         )
@@ -206,12 +205,13 @@ class QuestionViewController: UIViewController {
             .bind(with: self, onNext: { owner, indexPath in
                 let selectedIndex = indexPath.row
                 owner.selectedChoiceIndex.accept(selectedIndex)
-                owner.choicesCollectionView.reloadData() // 선택 즉시 UI 갱신
+                owner.choicesCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
         
         output.closeAction
             .drive(with: self, onNext: { owner, _ in
+                owner.completionHandler?(owner.questionResults) 
                 owner.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
@@ -223,12 +223,12 @@ class QuestionViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.helpAction
-            .drive(with: self, onNext: { owner, _ in
-                print("HELP AI button tapped")
-                // TODO: 도움말 화면 표시
-            })
-            .disposed(by: disposeBag)
+//        output.helpAction
+//            .drive(with: self, onNext: { owner, _ in
+//                print("HELP AI button tapped")
+//                // TODO: 도움말 화면 표시
+//            })
+//            .disposed(by: disposeBag)
         
         output.nextQuestionAction
             .drive(with: self) { owner, result in
@@ -267,17 +267,21 @@ class QuestionViewController: UIViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     if isLastQuestion {
                         print("Moving to ResultViewController")
-                        owner.completionHandler?(owner.questionResults)
-//                        owner.dismiss(animated: true, completion: nil)
-                        let resultVC = ResultViewController(results: owner.questionResults)
-                        owner.modalPresentationStyle = .fullScreen
+                        let resultVC = ResultViewController(results: owner.questionResults, learningFinished: true)
+                        resultVC.modalPresentationStyle = .fullScreen
+                        resultVC.completionHandler = { [weak owner] in
+                            owner?.completionHandler?(owner?.questionResults ?? [])
+                            owner?.dismiss(animated: true)
+                        }
                         owner.present(resultVC, animated: true, completion: nil)
+                        UserDefaultsManager.shared.count += 1
                         
-                        owner.choicesCollectionView.isUserInteractionEnabled = true
+                        
                     } else {
                         let nextIndex = currentIndex + 1
                         owner.currentQuestionIndex.accept(nextIndex)
                         print("Moving to next question: \(nextIndex + 1)")
+                        owner.choicesCollectionView.isUserInteractionEnabled = true
                     }
                 }
             }

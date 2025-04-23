@@ -150,6 +150,13 @@ class OnBoardingCompetencyViewController: UIViewController {
         
         completeButton.rx.tap
             .bind(with: self, onNext: { owner, _ in
+                UserDefaultsManager.shared.isStart = true
+                
+                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let window = windowScene.windows.first else { return }
+                
+                window.rootViewController = owner.moveToHomeViewController()
+                window.makeKeyAndVisible()
                 owner.navigationController?.pushViewController(owner.moveToHomeViewController(), animated: true)
             })
             .disposed(by: disposeBag)

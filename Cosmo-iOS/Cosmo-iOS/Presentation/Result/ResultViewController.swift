@@ -20,6 +20,10 @@ class ResultViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let results: [QuestionResult]
     
+    private let learningFinished: Bool
+    
+    var completionHandler: (() -> Void)?
+    
     private let headerLabel: UILabel = {
         let label = UILabel()
         label.text = "오늘의 학습 완료"
@@ -54,14 +58,16 @@ class ResultViewController: UIViewController {
     }()
     
     private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .white
+        
         return button
     }()
     
-    init(results: [QuestionResult]) {
+    init(results: [QuestionResult], learningFinished: Bool) {
         self.results = results
+        self.learningFinished = learningFinished
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -74,6 +80,9 @@ class ResultViewController: UIViewController {
         setupUI()
         setupCollectionView()
         bind()
+        
+//        correctCount()
+        headerView.isUserInteractionEnabled = true
     }
     
     private func setupUI() {
@@ -101,12 +110,13 @@ class ResultViewController: UIViewController {
         }
         
         closeButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(40)
+            make.top.equalToSuperview().offset(60)
             make.leading.equalToSuperview().offset(20)
             make.width.height.equalTo(30)
         }
         
         view.addSubview(resultCollectionView)
+        
         resultCollectionView.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(20)
@@ -126,8 +136,10 @@ class ResultViewController: UIViewController {
             .disposed(by: disposeBag)
         
         closeButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.dismiss(animated: true, completion: nil)
+            .bind(with: self, onNext: { owner, _ in
+                owner.dismiss(animated: true) {
+                    owner.completionHandler?()
+                }
             })
             .disposed(by: disposeBag)
     }

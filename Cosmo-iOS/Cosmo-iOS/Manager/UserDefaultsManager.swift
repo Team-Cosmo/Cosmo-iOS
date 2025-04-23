@@ -20,4 +20,13 @@ class UserDefaultsManager {
             UserDefaults.standard.set(newValue, forKey: "isStart")
         }
     }
+    
+    var count: Int {
+        get {
+            UserDefaults.standard.integer(forKey: "count")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "count")
+        }
+    }
 }
