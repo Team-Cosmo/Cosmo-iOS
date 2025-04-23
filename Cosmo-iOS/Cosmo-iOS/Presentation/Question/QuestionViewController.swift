@@ -16,6 +16,11 @@ class QuestionViewController: UIViewController {
     private var questions: [Question] = []
     private let currentQuestionIndex = BehaviorRelay<Int>(value: 0)
     private let selectedChoiceIndex = BehaviorRelay<Int?>(value: nil)
+//    let quizCompletedSubject = PublishSubject<Int>()
+    
+    private var questionResults: [QuestionResult] = []
+    
+    var completionHandler: (([QuestionResult]) -> Void)?
     
     private let closeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -32,17 +37,17 @@ class QuestionViewController: UIViewController {
         return label
     }()
     
-    private let menuButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
-        button.tintColor = .black
-        return button
-    }()
+//    private let menuButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
+//        button.tintColor = .black
+//        return button
+//    }()
     
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont(name: "Pretendard-Bold", size: 18)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -59,23 +64,22 @@ class QuestionViewController: UIViewController {
         return collectionView
     }()
     
-    private let helpButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("HELP AI", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 20
-        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
-        return button
-    }()
+//    private let helpButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setTitle("HELP AI", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        button.backgroundColor = .systemBlue
+//        button.layer.cornerRadius = 20
+//        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
+//        return button
+//    }()
     
     private let submitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("제출할게요", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setBackgroundImage(UIImage(named: "img_btn_cta"), for: .normal)
-        //        button.backgroundColor = .black
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 22)
         return button
     }()
     
@@ -98,11 +102,11 @@ class QuestionViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .gray200
         
         view.addSubview(closeButton)
         view.addSubview(questionNumberLabel)
-        view.addSubview(menuButton)
+//        view.addSubview(menuButton)
         
         closeButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
@@ -115,11 +119,11 @@ class QuestionViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
-        menuButton.snp.makeConstraints { make in
-            make.centerY.equalTo(closeButton)
-            make.trailing.equalToSuperview().offset(-20)
-            make.width.height.equalTo(30)
-        }
+//        menuButton.snp.makeConstraints { make in
+//            make.centerY.equalTo(closeButton)
+//            make.trailing.equalToSuperview().offset(-20)
+//            make.width.height.equalTo(30)
+//        }
         
         view.addSubview(questionLabel)
         questionLabel.snp.makeConstraints { make in
@@ -135,13 +139,13 @@ class QuestionViewController: UIViewController {
             make.height.equalTo(300)
         }
         
-        view.addSubview(helpButton)
-        helpButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-80)
-            make.trailing.equalToSuperview().offset(-20)
-            make.width.equalTo(80)
-            make.height.equalTo(40)
-        }
+//        view.addSubview(helpButton)
+//        helpButton.snp.makeConstraints { make in
+//            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-80)
+//            make.trailing.equalToSuperview().offset(-20)
+//            make.width.equalTo(80)
+//            make.height.equalTo(40)
+//        }
         
         view.addSubview(submitButton)
         submitButton.snp.makeConstraints { make in
@@ -155,8 +159,6 @@ class QuestionViewController: UIViewController {
         let input = QuestionViewModel.Input(
             questions: Observable.just(questions),
             closeTrigger: closeButton.rx.tap.asObservable(),
-            menuTrigger: menuButton.rx.tap.asObservable(),
-            helpTrigger: helpButton.rx.tap.asObservable(),
             submitTrigger: submitButton.rx.tap.asObservable(),
             choiceSelected: choicesCollectionView.rx.itemSelected.map { $0.item }
         )
@@ -174,6 +176,7 @@ class QuestionViewController: UIViewController {
             .drive(with: self) { owner, question in
                 guard let question = question else {
                     print("All questions completed")
+                    owner.completionHandler?(owner.questionResults)
                     owner.dismiss(animated: true, completion: nil)
                     return
                 }
@@ -194,6 +197,7 @@ class QuestionViewController: UIViewController {
                 let isSelected = row == self?.selectedChoiceIndex.value
                 let answerState = self?.answerStates[row] ?? .none
                 cell.configure(with: choice, isSelected: isSelected, answerState: answerState)
+            
             }
             .disposed(by: disposeBag)
         
@@ -201,36 +205,50 @@ class QuestionViewController: UIViewController {
             .bind(with: self, onNext: { owner, indexPath in
                 let selectedIndex = indexPath.row
                 owner.selectedChoiceIndex.accept(selectedIndex)
-                owner.choicesCollectionView.reloadData() // 선택 즉시 UI 갱신
+                owner.choicesCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
         
         output.closeAction
             .drive(with: self, onNext: { owner, _ in
+                owner.completionHandler?(owner.questionResults) 
                 owner.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
         
-        output.menuAction
-            .drive(with: self, onNext: { owner, _ in
-                print("Menu button tapped")
-                // TODO: 메뉴 화면으로 전환
-            })
-            .disposed(by: disposeBag)
+//        output.menuAction
+//            .drive(with: self, onNext: { owner, _ in
+//                print("Menu button tapped")
+//                // TODO: 메뉴 화면으로 전환
+//            })
+//            .disposed(by: disposeBag)
         
-        output.helpAction
-            .drive(with: self, onNext: { owner, _ in
-                print("HELP AI button tapped")
-                // TODO: 도움말 화면 표시
-            })
-            .disposed(by: disposeBag)
+//        output.helpAction
+//            .drive(with: self, onNext: { owner, _ in
+//                print("HELP AI button tapped")
+//                // TODO: 도움말 화면 표시
+//            })
+//            .disposed(by: disposeBag)
         
         output.nextQuestionAction
             .drive(with: self) { owner, result in
                 let (isCorrect, correctAnswerIndex) = result
+                
+                let currentIndex = owner.currentQuestionIndex.value
+                
+                let question = owner.questions[currentIndex]
+                let correctAnswerText = question.choices[question.answer - 1]
+                let result = QuestionResult(
+                    question: question.question,
+                    answer: correctAnswerText,
+                    isCorrect: isCorrect
+                )
+                owner.questionResults.append(result)
+                
+                let isLastQuestion = currentIndex == owner.questions.count - 1
+                
                 guard let selectedIndex = owner.selectedChoiceIndex.value else { return }
                 
-                // 정답/오답 상태 즉시 반영
                 var answerStates = Array(repeating: AnswerState.none, count: 4)
                 if isCorrect {
                     answerStates[selectedIndex] = .correct
@@ -242,7 +260,30 @@ class QuestionViewController: UIViewController {
                 }
                 
                 owner.answerStates = answerStates
-                owner.choicesCollectionView.reloadData() // 즉시 UI 갱신
+                owner.choicesCollectionView.reloadData()
+                
+                owner.choicesCollectionView.isUserInteractionEnabled = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    if isLastQuestion {
+                        print("Moving to ResultViewController")
+                        let resultVC = ResultViewController(results: owner.questionResults, learningFinished: true)
+                        resultVC.modalPresentationStyle = .fullScreen
+                        resultVC.completionHandler = { [weak owner] in
+                            owner?.completionHandler?(owner?.questionResults ?? [])
+                            owner?.dismiss(animated: true)
+                        }
+                        owner.present(resultVC, animated: true, completion: nil)
+                        UserDefaultsManager.shared.count += 1
+                        
+                        
+                    } else {
+                        let nextIndex = currentIndex + 1
+                        owner.currentQuestionIndex.accept(nextIndex)
+                        print("Moving to next question: \(nextIndex + 1)")
+                        owner.choicesCollectionView.isUserInteractionEnabled = true
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }

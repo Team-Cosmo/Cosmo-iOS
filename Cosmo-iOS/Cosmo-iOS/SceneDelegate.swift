@@ -15,14 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-//        let navigationController = UINavigationController(rootViewController: CoinListViewController(viewModel: CoinListViewModel(marketService: UpbitMarketService())) )
         
         let qusetionrepo = QuestionRepositoryImpl(remoteDataSource: RemoteQuestionDataSourceImpl())
         let fetchQuestionsUseCase = FetchQuestionsUseCaseImpl(repository: qusetionrepo)
         
         let viewModel = HomeViewModel(fetchQuestionsUseCase: fetchQuestionsUseCase)
         
-        window?.rootViewController = HomeViewController(viewModel: viewModel)
+        window?.rootViewController = UserDefaultsManager.shared.isStart
+        ? HomeViewController(viewModel: viewModel)
+        : UINavigationController(rootViewController: OnBoardingPriorityViewController())
         window?.makeKeyAndVisible()
     }
 

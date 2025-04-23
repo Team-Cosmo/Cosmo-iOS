@@ -19,37 +19,34 @@ class OnBoardingCompetencyViewController: UIViewController {
         label.text = "과목별 역량을 알려주세요"
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont(name: "Pretendard-Bold", size: 22)
+        label.textColor = .black
+        
         return label
     }()
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "작우 데이터를 통해 수치를 조정할 수 있어요"
+        label.text = "좌우 드래그를 통해 수치를 조정할 수 있어요"
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont(name: "Pretendard-Medium", size: 16)
         label.textColor = .gray
         return label
     }()
     
-    private let beginnerButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("처음 배워요", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.cornerRadius = 8
-        return button
+    private let beginnerImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "img_onboarding_2_left")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
-    private let expertButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("선명한 수 있어요!", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.cornerRadius = 8
-        return button
+    private let expertImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "img_onboarding_2_right")
+        imageView.contentMode = .scaleAspectFill
+        
+        return imageView
     }()
     
     private let collectionView: UICollectionView = {
@@ -59,7 +56,7 @@ class OnBoardingCompetencyViewController: UIViewController {
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 80)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(OnBoardingCompetencyCollectionViewCell.self, forCellWithReuseIdentifier: OnBoardingCompetencyCollectionViewCell.identifier)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .gray200
         return collectionView
     }()
     
@@ -67,20 +64,15 @@ class OnBoardingCompetencyViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("완료하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 8
+        button.setBackgroundImage(UIImage(named: "img_btn_cta"), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 22)
+        
         return button
     }()
     
-    private let subjects = BehaviorRelay<[String]>(value: [
-        "운영체제",
-        "자료구조",
-        "알고리즘",
-        "네트워크",
-        "데이터베이스"
-    ])
+    private let subjects = BehaviorRelay<[String]>(value: [])
     
-    private var sliderValues: [String: Float] = [:] // 과목별 슬라이더 값 저장
+    private var sliderValues: [String: Float] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,13 +80,20 @@ class OnBoardingCompetencyViewController: UIViewController {
         bind()
     }
     
+    func setSubjects(_ subjects: [String]) {
+        self.subjects.accept(subjects)
+        subjects.forEach { subject in
+            sliderValues[subject] = 0
+        }
+    }
+    
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .gray200
         
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
-        view.addSubview(beginnerButton)
-        view.addSubview(expertButton)
+        view.addSubview(beginnerImageView)
+        view.addSubview(expertImageView)
         view.addSubview(collectionView)
         view.addSubview(completeButton)
         
@@ -106,33 +105,34 @@ class OnBoardingCompetencyViewController: UIViewController {
         subtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
+//            make.horizontalEdges.equalToSuperview().inset(-55)
         }
         
-        beginnerButton.snp.makeConstraints { make in
+        beginnerImageView.snp.makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp.bottom).offset(16)
             make.left.equalToSuperview().offset(20)
-            make.width.equalTo(120)
-            make.height.equalTo(40)
+            make.width.equalTo(122)
+            make.height.equalTo(42)
         }
         
-        expertButton.snp.makeConstraints { make in
+        expertImageView.snp.makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp.bottom).offset(16)
-            make.right.equalToSuperview().offset(-20)
-            make.width.equalTo(120)
-            make.height.equalTo(40)
+            make.right.equalToSuperview().offset(-32)
+            make.width.equalTo(122)
+            make.height.equalTo(42)
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(beginnerButton.snp.bottom).offset(20)
+            make.top.equalTo(beginnerImageView.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
             make.bottom.equalTo(completeButton.snp.top).offset(-20)
         }
         
         completeButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.left.right.equalToSuperview().inset(20)
-            make.height.equalTo(50)
+            make.bottom.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(100)
         }
     }
     
@@ -140,7 +140,7 @@ class OnBoardingCompetencyViewController: UIViewController {
         subjects
             .bind(to: collectionView.rx.items(cellIdentifier: OnBoardingCompetencyCollectionViewCell.identifier, cellType: OnBoardingCompetencyCollectionViewCell.self)) { [weak self] (row, element, cell) in
                 cell.configure(subject: element)
-                // 슬라이더 값 변경 이벤트 바인딩
+                cell.slider.value = self?.sliderValues[element] ?? 0
                 cell.onSliderValueChanged = { value in
                     self?.sliderValues[element] = value
                     print("\(element) 슬라이더 값: \(value)")
@@ -148,42 +148,30 @@ class OnBoardingCompetencyViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        beginnerButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                print("처음 배워요 버튼이 눌렸습니다.")
-                // 모든 슬라이더 값을 0으로 설정
-                self?.collectionView.visibleCells.forEach { cell in
-                    if let priorityCell = cell as? OnBoardingCompetencyCollectionViewCell {
-                        priorityCell.slider.value = 0
-                    }
-                }
-                self?.subjects.value.forEach { subject in
-                    self?.sliderValues[subject] = 0
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        expertButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                print("선명한 수 있어요! 버튼이 눌렸습니다.")
-                // 모든 슬라이더 값을 100으로 설정
-                self?.collectionView.visibleCells.forEach { cell in
-                    if let priorityCell = cell as? OnBoardingCompetencyCollectionViewCell {
-                        priorityCell.slider.value = 100
-                    }
-                }
-                self?.subjects.value.forEach { subject in
-                    self?.sliderValues[subject] = 100
-                }
-            })
-            .disposed(by: disposeBag)
-        
         completeButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                print("완료하기 버튼이 눌렸습니다.")
-                print("최종 슬라이더 값: \(self?.sliderValues ?? [:])")
+            .bind(with: self, onNext: { owner, _ in
+                UserDefaultsManager.shared.isStart = true
+                
+                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let window = windowScene.windows.first else { return }
+                
+                window.rootViewController = owner.moveToHomeViewController()
+                window.makeKeyAndVisible()
+                owner.navigationController?.pushViewController(owner.moveToHomeViewController(), animated: true)
             })
             .disposed(by: disposeBag)
     }
-    
+}
+
+extension OnBoardingCompetencyViewController {
+    private func moveToHomeViewController() -> HomeViewController {
+        let qusetionrepo = QuestionRepositoryImpl(remoteDataSource: RemoteQuestionDataSourceImpl())
+        let fetchQuestionsUseCase = FetchQuestionsUseCaseImpl(repository: qusetionrepo)
+        
+        let viewModel = HomeViewModel(fetchQuestionsUseCase: fetchQuestionsUseCase)
+        
+        let homeVC = HomeViewController(viewModel: viewModel)
+        
+        return homeVC
+    }
 }

@@ -10,7 +10,7 @@ import UIKit
 class OnBoardingCompetencyCollectionViewCell: UICollectionViewCell {
     static let identifier = "OnBoardingCompetencyCollectionViewCell"
     
-    var onSliderValueChanged: ((Float) -> Void)? // 슬라이더 값 변경 콜백
+    var onSliderValueChanged: ((Float) -> Void)? 
     
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -21,11 +21,11 @@ class OnBoardingCompetencyCollectionViewCell: UICollectionViewCell {
     
     private let subjectLabel: UILabel = {
         let label = UILabel()
-        if let customFont = UIFont(name: "DOSGothic", size: 16) {
+        if let customFont = UIFont(name: "Pretendard-Bold", size: 18) {
             label.font = customFont
         } else {
             print("폰트 'DOSGothic'을 찾을 수 없습니다. 시스템 폰트로 대체합니다.")
-            label.font = .systemFont(ofSize: 16, weight: .regular)
+            label.font = .systemFont(ofSize: 18, weight: .regular)
         }
         label.textColor = .black
         return label
@@ -36,9 +36,9 @@ class OnBoardingCompetencyCollectionViewCell: UICollectionViewCell {
         slider.minimumValue = 0
         slider.maximumValue = 100
         slider.value = 0
-        slider.minimumTrackTintColor = .black // 슬라이더 왼쪽 부분을 검은색으로 설정
-        slider.maximumTrackTintColor = .lightGray // 슬라이더 오른쪽 부분은 연한 회색
-        slider.setThumbImage(UIImage(systemName: "circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal) // 썸 아이콘
+        slider.minimumTrackTintColor = .black
+        slider.maximumTrackTintColor = .lightGray
+        slider.setThumbImage(UIImage(systemName: "circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
         return slider
     }()
     
@@ -54,9 +54,7 @@ class OnBoardingCompetencyCollectionViewCell: UICollectionViewCell {
     
     private func setupUI() {
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 25
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.systemGray5.cgColor
+        contentView.layer.cornerRadius = 20
         contentView.clipsToBounds = true
         
         contentView.layer.shadowColor = UIColor.black.cgColor
@@ -68,21 +66,18 @@ class OnBoardingCompetencyCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(subjectLabel)
         contentView.addSubview(slider)
         
-        // 아이콘 레이아웃
         iconImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
             make.top.equalToSuperview().offset(12)
             make.width.height.equalTo(24)
         }
         
-        // 과목 레이블 레이아웃
         subjectLabel.snp.makeConstraints { make in
             make.left.equalTo(iconImageView.snp.right).offset(8)
             make.centerY.equalTo(iconImageView)
-            make.right.equalToSuperview().offset(-16) // 오른쪽 여백 추가
+            make.right.equalToSuperview().offset(-16)
         }
         
-        // 슬라이더 레이아웃
         slider.snp.makeConstraints { make in
             make.top.equalTo(iconImageView.snp.bottom).offset(8)
             make.left.equalToSuperview().offset(16)
@@ -102,17 +97,18 @@ class OnBoardingCompetencyCollectionViewCell: UICollectionViewCell {
     
     func configure(subject: String) {
         subjectLabel.text = subject
+        
         switch subject {
         case "운영체제":
-            iconImageView.image = UIImage(systemName: "gearshape.fill")
+            iconImageView.image = UIImage(named: "img_operatingsystem")
         case "자료구조":
-            iconImageView.image = UIImage(systemName: "chart.bar.fill")
+            iconImageView.image = UIImage(named: "img_datastructure")
         case "알고리즘":
-            iconImageView.image = UIImage(systemName: "flowchart.fill")
+            iconImageView.image = UIImage(named: "img_algorithm")
         case "네트워크":
-            iconImageView.image = UIImage(systemName: "network")
+            iconImageView.image = UIImage(named: "img_network")
         case "데이터베이스":
-            iconImageView.image = UIImage(systemName: "tablecells.fill")
+            iconImageView.image = UIImage(named: "img_database")
         default:
             iconImageView.image = UIImage(systemName: "book.fill")
         }

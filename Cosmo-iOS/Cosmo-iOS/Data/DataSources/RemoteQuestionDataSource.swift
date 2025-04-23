@@ -76,9 +76,13 @@ class RemoteQuestionDataSourceImpl: RemoteQuestionDataSource {
     
     private func createMessages(for subject: String) -> [[String: Any]] {
         let formatInstruction = """
-        Generate exactly 10 multiple-choice questions in the following format:
+        Generate exactly 10 multiple-choice questions in the following JSON format:
         [{"question": String, "choices": Array<String>, "answer": Int}]
-        Each question must have exactly 4 choices, and the answer must be an integer between 1 and 4 (corresponding to the choice index, 1-based). All questions and choices must be written in Korean (Hangul). Return only the JSON array, do not include any additional text, explanations, or formatting outside the JSON array (e.g., no ```json markers). Strictly adhere to the specified format. The difficulty level should be intermediate. Ensure the response is a valid JSON array.
+        Each question must:
+        1. Be written in Korean (Hangul).
+        2. Have exactly 4 choices, where each choice is a meaningful and relevant option related to the question (e.g., specific SQL commands for database questions, not generic placeholders like "선택 1").
+        3. Have an answer as an integer between 1 and 4 (1-based index corresponding to the correct choice).
+        The questions should be of intermediate difficulty and cover the specified subject. Return only the JSON array, without any additional text, explanations, or formatting (e.g., no ```json markers). Ensure the response is a valid JSON array.
         """
         
         switch subject {

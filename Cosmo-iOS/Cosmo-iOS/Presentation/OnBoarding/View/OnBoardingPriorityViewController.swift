@@ -53,27 +53,24 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         label.text = "과목별 학습 우선 순위를\n알려주세요"
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont(name: "Pretendard-Bold", size: 22)
         return label
     }()
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "성향 데이터를 통해 컨텐츠 조정할 수 있어요"
+        label.text = "상하 드레그를 통해 순위를 조정할 수 있어요"
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont(name: "Pretendard-Medium", size: 16)
         label.textColor = .gray
         return label
     }()
     
-    private let shuffleButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("⤮ 추천해요!", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.cornerRadius = 8
-        return button
+    private let shuffleImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "img_onboarding_1_up")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     private let rankStackView: UIStackView = {
@@ -84,34 +81,46 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         return stackView
     }()
     
+//    private let collectionView: UICollectionView = {
+//        let layout = UICollectionViewFlowLayout()
+//        layout.scrollDirection = .vertical
+//        layout.minimumLineSpacing = 10
+//        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 60, height: 54)
+//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collectionView.register(OnBoardingPriorityCollectionViewCell.self, forCellWithReuseIdentifier: OnBoardingPriorityCollectionViewCell.identifier)
+//        collectionView.backgroundColor = .gray200
+//        collectionView.contentInset = .zero
+//        return collectionView
+//    }()
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 10 // rankStackView.spacing과 동일
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 60, height: 50) // 레이블 높이와 동일
+        layout.minimumLineSpacing = 10
+        // 화면 너비 - 50 (rankStackView 너비 20 + left 오프셋 10 + right 오프셋 20)
+        let itemWidth = UIScreen.main.bounds.width - 50
+        layout.itemSize = CGSize(width: itemWidth, height: 54)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(OnBoardingPriorityCollectionViewCell.self, forCellWithReuseIdentifier: OnBoardingPriorityCollectionViewCell.identifier)
         collectionView.backgroundColor = .gray200
-        collectionView.contentInset = .zero // 추가 패딩 없도록 설정
+        collectionView.contentInset = .zero
         return collectionView
     }()
     
-    private let downloadButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("↓ 달 줍줍해요", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.cornerRadius = 8
-        return button
+    private let downloadImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "img_onboarding_1_down")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     private let nextButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("다음으로 ➔", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 8
+        button.setBackgroundImage(UIImage(named: "img_btn_cta"), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 22)
+        
         return button
     }()
     
@@ -123,13 +132,12 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         "데이터베이스"
     ])
     
-    private var snapshot: UIView? // 드래그 중인 셀의 스냅샷
-    private var sourceIndexPath: IndexPath? // 드래그 시작 위치
+    private var snapshot: UIView?
+    private var sourceIndexPath: IndexPath?
     private var isDragging: Bool = false
     private var originalPosition: CGPoint = .zero
     private let config = DragDropConfig()
     
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -137,18 +145,18 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         bind()
         setupLongPressGesture()
         collectionView.contentOffset = .zero
+        setBackButton()
     }
     
-    // MARK: - Setup UI
     private func setupUI() {
         view.backgroundColor = .gray200
         
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
-        view.addSubview(shuffleButton)
+        view.addSubview(shuffleImageView)
         view.addSubview(rankStackView)
         view.addSubview(collectionView)
-        view.addSubview(downloadButton)
+        view.addSubview(downloadImageView)
         view.addSubview(nextButton)
         
         titleLabel.snp.makeConstraints { make in
@@ -161,28 +169,27 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
             make.centerX.equalToSuperview()
         }
         
-        shuffleButton.snp.makeConstraints { make in
+        shuffleImageView.snp.makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
             make.width.equalTo(120)
             make.height.equalTo(40)
         }
         
-        // rankStackView와 collectionView의 상단을 정확히 맞춤
         rankStackView.snp.makeConstraints { make in
-            make.top.equalTo(shuffleButton.snp.bottom).offset(20)
+            make.top.equalTo(shuffleImageView.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(20)
             make.width.equalTo(20)
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(shuffleButton.snp.bottom).offset(20) // rankStackView와 동일한 상단 오프셋
-            make.left.equalTo(rankStackView.snp.right).offset(10)
-            make.right.equalToSuperview().offset(-20)
-            make.bottom.equalTo(downloadButton.snp.top).offset(-20)
+            make.top.equalTo(shuffleImageView.snp.bottom).offset(20)
+            make.left.equalTo(rankStackView.snp.right)
+            make.right.equalToSuperview().offset(-10)
+            make.bottom.equalTo(downloadImageView.snp.top).offset(-20)
         }
         
-        downloadButton.snp.makeConstraints { make in
+        downloadImageView.snp.makeConstraints { make in
             make.bottom.equalTo(nextButton.snp.top).offset(-16)
             make.centerX.equalToSuperview()
             make.width.equalTo(120)
@@ -190,9 +197,9 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         }
         
         nextButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.left.right.equalToSuperview().inset(20)
-            make.height.equalTo(50)
+            make.bottom.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(100)
         }
     }
     
@@ -201,44 +208,38 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
         for i in 1...subjects.value.count {
             let label = UILabel()
             label.text = "\(i)"
-            label.font = UIFont(name: "DOSGothic", size: 16)
+            label.font = UIFont(name: "DOSGothic", size: 32)
             label.textColor = .gray900
             label.textAlignment = .center
-            // 레이블 높이를 collectionView 셀 높이에 맞춤
             label.snp.makeConstraints { make in
-                make.height.equalTo(50) // collectionView itemSize.height와 동일
+                make.height.equalTo(54)
             }
             rankStackView.addArrangedSubview(label)
         }
-        // 스택 뷰 간격을 collectionView의 minimumLineSpacing과 맞춤
         rankStackView.spacing = 10
     }
     
-    // MARK: - Bind RxSwift
     private func bind() {
         subjects
             .bind(to: collectionView.rx.items(cellIdentifier: OnBoardingPriorityCollectionViewCell.identifier, cellType: OnBoardingPriorityCollectionViewCell.self)) { (row, element, cell) in
                 cell.configure(subject: element)
                 cell.backgroundColor = .white
+                DispatchQueue.main.async {
+                    cell.layer.cornerRadius = 20
+                }
             }
             .disposed(by: disposeBag)
         
-        shuffleButton.rx.tap
+        nextButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                let shuffled = self.subjects.value.shuffled()
-                self.subjects.accept(shuffled)
-            })
-            .disposed(by: disposeBag)
-        
-        nextButton.rx.tap
-            .subscribe(onNext: {
-                print("다음으로 버튼이 눌렸습니다.")
+                let competencyVC = OnBoardingCompetencyViewController()
+                competencyVC.setSubjects(self.subjects.value)
+                self.navigationController?.pushViewController(competencyVC, animated: true)
             })
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Setup Long Press Gesture
     private func setupLongPressGesture() {
         collectionView.rx.longPressGesture(configuration: { [weak self] gesture, delegate in
             gesture.minimumPressDuration = self?.config.longPressMinimumPressDuration ?? 0.2
@@ -342,6 +343,27 @@ class OnBoardingPriorityViewController: UIViewController, DragDropStackViewDeleg
             self.isDragging = false
             self.didEndDrop()
         }
+    }
+    
+    private func setBackButton() {
+//        let backButton = UIBarButtonItem(
+//            image: UIImage(named: "img_arrow_left_white"),
+//            style: .plain,
+//            target: nil,
+//            action: nil
+//        )
+//        backButton.tintColor = .black
+//        self.navigationItem.backBarButtonItem = backButton
+//        
+        let backImage = UIImage(named: "img_arrow_left_white")
+
+        self.navigationController?.navigationBar.backIndicatorImage = backImage
+
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
+        
+        self.navigationController?.navigationBar.tintColor = .black
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     // MARK: - DragDropStackViewDelegate
